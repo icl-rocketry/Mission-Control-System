@@ -14,5 +14,5 @@ def valveControl(valveName, arg):
     address = systemAddresses[valveName]
     #function creates valve command packet and sends it
     
-def engineIgnition():
+#def engineIgnition():
     #function commands the ignition of the ignition motor
