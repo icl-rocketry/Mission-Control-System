@@ -1,0 +1,7 @@
+{
+  "mainOxidiserValve": 0b11001101,
+  "mainFuelValve": 0b00011100,
+  "oxidiserVentValve": 0b11111100,
+  "fuelVentValve": 0b01010101,
+  "engineIgnition": 0b00000001
+  }
