@@ -13,6 +13,7 @@ Created on Thu Feb  9 20:17:03 2023
 
 import time
 import hid
+import systemControls
 
 
 h = hid.device()
@@ -46,6 +47,7 @@ def check_buttons(buttons_to_check,button_array) -> bool:
 while True:
     time.sleep(1)
     x = h.read(100, 1)
-    print(check_buttons(x[0], [1]))
+    if (check_buttons([0], x)):
+        systemControls.engineFire()
 
 
