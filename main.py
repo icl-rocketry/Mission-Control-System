@@ -16,7 +16,7 @@ Created on Thu Feb  9 20:17:03 2023
 
 import pygame
 import json, os
-import EngineControls
+import systemControls
 import time
 import numpy as np
 
@@ -36,18 +36,19 @@ previousPressTime = np.zeros(64)
 standardButtonPressDelay = 0.3
 
 def timeCheck(prev_time, delay):
-    curr_time = round(time.time()*1000)
-    if (curr_time - prev_time) <= delay:
+    if (time.time()*1000 - prev_time) <= delay:
         return 0
     else:
         return 1
+
+
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.JOYBUTTONDOWN:
             if event.button == button_keys['B-1']:
                 if timeCheck(previousPressTime[0], 1) == 1:
-                    EngineControls.engineFire()
+                    systemControls.engineFire()
                 else:
                     continue
             if event.button == button_keys['B-2']:
@@ -59,7 +60,7 @@ while True:
                 print('B_3 Pressed')
         if event.type == pygame.JOYBUTTONUP:
             if event.button == button_keys['B-1']:
-                EngineControls.engineStop()
+                systemControls.engineStop()
                 
                 
 
