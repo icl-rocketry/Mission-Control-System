@@ -11,56 +11,23 @@ Created on Thu Feb  9 20:17:03 2023
 # Figure out a system overview
 # Steal a board and a valve to practice with
 
+import hid
 
+try:
+    print("Opening the device")
 
+    h = hid.device()
+    h.open(0x1dd2, 0x2010)  # TREZOR VendorID/ProductID
 
-import pygame
-import json, os
-import systemControls
-import time
-import numpy as np
+    print("Feature Report: %s" % h.read(100, 1))
+    print("Closing the device")
+    h.close()
 
+except IOError as ex:
+    print(ex)
+    print("You probably don't have the hard-coded device.")
+    print("Update the h.open() line in this script with the one")
+    print("from the enumeration list output above and try again.")
 
-
-pygame.init()
-joysticks = []
-for i in range(pygame.joystick.get_count()):
-    joysticks.append(pygame.joystick.Joystick(i))
-for joystick in joysticks:
-    joystick.init()
-
-with open(os.path.join("buttons.json"), 'r+') as file:
-    button_keys = json.load(file)
-    
-previousPressTime = np.zeros(64)
-standardButtonPressDelay = 0.3
-
-def timeCheck(prev_time, delay):
-    if (time.time()*1000 - prev_time) <= delay:
-        return 0
-    else:
-        return 1
-
-
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.JOYBUTTONDOWN:
-            if event.button == button_keys['B-1']:
-                if timeCheck(previousPressTime[0], 1) == 1:
-                    systemControls.engineFire()
-                else:
-                    continue
-            if event.button == button_keys['B-2']:
-                if timeCheck(previousPressTime[0], standardButtonPressDelay) == 1:
-                    print('B_2 Pressed')
-                else:
-                    continue
-            if event.button == button_keys['B-3']:
-                print('B_3 Pressed')
-        if event.type == pygame.JOYBUTTONUP:
-            if event.button == button_keys['B-1']:
-                systemControls.engineStop()
-                
-                
+print("Done")  
 
